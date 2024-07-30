@@ -8,9 +8,9 @@ namespace Business.Constants
 {
     public static class Messages
     {
-        public static string ProductAdded = "Door Successfully Added";
-        public static string ProductDeleted = "Door Successfully Deleted";
-        public static string ProductUpdated = "Door Successfully Updated";
+        public static string ProductAdded = "Product Successfully Added";
+        public static string ProductDeleted = "Product Successfully Deleted";
+        public static string ProductUpdated = "Product Successfully Updated";
 
         public static string UserNotFound = "User not found";
         public static string PasswordError = "Password is wrong";
