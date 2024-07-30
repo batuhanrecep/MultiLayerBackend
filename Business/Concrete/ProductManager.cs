@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -37,20 +38,20 @@ namespace Business.Concrete
         public IResult Add(Product product)
         {
             _productDal.Add(product);
-            return new SuccessResult("aa");
+            return new SuccessResult(Messages.ProductAdded);
 
         }
 
         public IResult Update(Product product)
         {
             _productDal.Update(product);
-            return new SuccessResult("bb");
+            return new SuccessResult(Messages.ProductUpdated);
         }
 
         public IResult Delete(Product product)
         {
             _productDal.Delete(product);
-            return new SuccessResult("c");
+            return new SuccessResult(Messages.ProductDeleted);
         }
     }
 }
