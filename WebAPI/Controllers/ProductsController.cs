@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
             _productService = productService;
         }
 
-        [HttpGet("get all")]
+        [HttpGet("getall")] //kind of url info
         public IActionResult GetList()
         {
             var result = _productService.GetList();
@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpGet("get category")]
+        [HttpGet("getcategory")]
         public IActionResult GetListByCategory(int categoryId)
         {
             var result = _productService.GetListByCategory(categoryId);
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpGet("get by id")]
+        [HttpGet("getbyid")] 
         public IActionResult Get(int ProductId)
         {
             var result = _productService.GetById(ProductId);
