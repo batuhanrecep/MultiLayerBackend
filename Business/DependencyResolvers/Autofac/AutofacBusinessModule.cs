@@ -8,6 +8,7 @@ using Business.Abstract;
 using Business.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using Microsoft.Identity.Client;
 
 namespace Business.DependencyResolvers.Autofac
 {
@@ -20,6 +21,9 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<CategoryManager>().As<ICategoryService>();
             builder.RegisterType<EfCategoryDal>().As<ICategoryDal>();
+
+            builder.RegisterType<UserManager>().As<IUserService>();
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
         }
     }
 }
