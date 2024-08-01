@@ -5,9 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using FluentValidation;
 
 namespace Business.Concrete
 {
@@ -37,9 +40,11 @@ namespace Business.Concrete
 
         //Cross Cutting Concerns Examples - Validation, Cache, Log, Performance, Auth, Transaction
         //AOP - Aspect Oriented Programming  should use only for cross-cutting concerns 
+        [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
-
+            //Its not the best way
+            //ValidationTool.Validate(new ProductValidator(),product);
 
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
