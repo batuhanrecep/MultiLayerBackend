@@ -18,6 +18,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("login")]
+        [EnableCors("AllowSpecificOrigin")]
         public ActionResult Login(UserForLoginDto userForLoginDto)
         {
             var userToLogin = _authService.Login(userForLoginDto);
