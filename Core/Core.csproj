@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Abstract\" />
     <Folder Include="Concrete\" />
-    <Folder Include="Aspects\" />
     <Folder Include="Utilities\Interceptors\Autofac\" />
   </ItemGroup>
 
