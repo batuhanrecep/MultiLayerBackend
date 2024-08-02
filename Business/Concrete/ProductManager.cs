@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -40,7 +42,7 @@ namespace Business.Concrete
 
         //Cross Cutting Concerns Examples - Validation, Cache, Log, Performance, Auth, Transaction
         //AOP - Aspect Oriented Programming  should use only for cross-cutting concerns 
-        [ValidationAspect(typeof(ProductValidator))]
+        [ValidationAspect(typeof(ProductValidator),Priority = 1)]
         public IResult Add(Product product)
         {
             //Its not the best way
@@ -61,6 +63,15 @@ namespace Business.Concrete
         {
             _productDal.Delete(product);
             return new SuccessResult(Messages.ProductDeleted);
+        }
+
+        //TEST OPERATİON
+        [TransactionScopeAspect]
+        public IResult TransactionalOperation(Product product)
+        {
+            _productDal.Update(product);
+            // _productDal.Add(product);
+            return new SuccessResult(Messages.ProductUpdated);
         }
     }
 }
