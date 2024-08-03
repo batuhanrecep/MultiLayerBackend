@@ -17,6 +17,7 @@ namespace Business.Abstract
         IResult Update(Product product);
         IResult Delete(Product product);
 
+        //TEST
         IResult TransactionalOperation(Product product);//testing
     }
 }

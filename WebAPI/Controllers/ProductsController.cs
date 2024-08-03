@@ -87,6 +87,8 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
+
+        //TEST
         [HttpPost("transaction")]
         public IActionResult TranscationTest(Product product)
         {
