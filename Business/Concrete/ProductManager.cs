@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation.FluentValidation;
@@ -35,6 +36,8 @@ namespace Business.Concrete
             return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId == productId));
         }
 
+
+        [CacheAspect(duration:10)]
         public IDataResult<List<Product>> GetListByCategory(int categoryId)
         {
             return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.CategoryId == categoryId).ToList());
@@ -43,6 +46,7 @@ namespace Business.Concrete
         //Cross Cutting Concerns Examples - Validation, Cache, Log, Performance, Auth, Transaction
         //AOP - Aspect Oriented Programming  should use only for cross-cutting concerns 
         [ValidationAspect(typeof(ProductValidator),Priority = 1)]
+        [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Product product)
         {
             //Its not the best way
