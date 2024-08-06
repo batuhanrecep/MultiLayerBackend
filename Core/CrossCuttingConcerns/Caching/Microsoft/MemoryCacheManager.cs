@@ -46,7 +46,7 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
         public void RemoveByPattern(string pattern)
         {
             // (_cache.Keys) before .net core there was a method like beginning. But now .net core is not givings us cache object. To get this object we are writing these;
-            //Half of the code came from Stackoverflow and other half written by Engin Demirog
+            //Half of the code came from Stackoverflow and other half written by Engin Demirog.
             //To get details of the code: https://www.udemy.com/course/net-core-c-sharp-kursu-2/learn/lecture/16393876#questions/8583358
 
             var cacheEntriesCollectionDefinition = typeof(MemoryCache).GetProperty("EntriesCollection", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
