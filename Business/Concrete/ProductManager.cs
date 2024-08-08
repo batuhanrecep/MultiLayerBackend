@@ -77,12 +77,16 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductDeleted);
         }
 
-        //TEST OPERATİON
+        //This operation made for testing our transaction aspect
+        [ValidationAspect(typeof(ProductValidator), Priority = 1)]
         [TransactionScopeAspect]
         public IResult TransactionalOperation(Product product)
         {
+            _productDal.Add(product);
             _productDal.Update(product);
-            // _productDal.Add(product);
+
+            
+
             return new SuccessResult(Messages.ProductUpdated);
         }
     }
