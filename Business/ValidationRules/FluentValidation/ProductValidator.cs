@@ -12,7 +12,8 @@ namespace Business.ValidationRules.FluentValidation
     {
         public ProductValidator()
         {
-            // RuleFor(p => p.ProductName).NotEmpty().Length(2, 30);  - It can be written like this but, it's better to write validations one by one
+            // RuleFor(p => p.ProductName).NotEmpty().Length(2, 30);  - It can be written like this but, it's better to write validations one by one.
+            // With this way, we can write messages for every one of them. (Its just example)
              
             RuleFor(p => p.ProductName).NotEmpty().WithMessage("Product cannot be empty"); //MAGIC STRING - Add message class for these
             RuleFor(p => p.ProductName).Length(2, 30);
