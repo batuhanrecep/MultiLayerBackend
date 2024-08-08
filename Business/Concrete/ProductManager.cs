@@ -43,8 +43,8 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.CategoryId == categoryId).ToList());
         }
 
-        //Cross Cutting Concerns Examples - Validation, Cache, Log, Performance, Auth, Transaction
-        //AOP - Aspect Oriented Programming  should use only for cross-cutting concerns 
+        //Cross Cutting Concerns Examples: Validation, Cache, Log, Performance, Auth, Transaction
+        //AOP - Aspect Oriented Programming  should only use for cross-cutting concerns 
         [ValidationAspect(typeof(ProductValidator),Priority = 1)]
         [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Product product)
