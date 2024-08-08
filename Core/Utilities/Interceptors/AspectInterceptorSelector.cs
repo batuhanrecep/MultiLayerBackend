@@ -10,6 +10,8 @@ namespace Core.Utilities.Interceptors
 {
     public class AspectInterceptorSelector:IInterceptorSelector
     {
+        // This class is responsible for selecting and ordering interceptors for Autofac
+        // and Castle DynamicProxy's proxy generation to enabling aspect-oriented programming (AOP) with our aspects.
         public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
         {
             var classAttributes = type.GetCustomAttributes<MethodInterceptionBaseAttribute>(true).ToList();
@@ -17,6 +19,7 @@ namespace Core.Utilities.Interceptors
 
             classAttributes.AddRange(methodAttributes);
 
+            //This is explained in "MethodInterceptionBaseAttribute"
             return classAttributes.OrderBy(x => x.Priority).ToArray();
         }
     }

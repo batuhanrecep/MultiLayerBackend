@@ -43,14 +43,22 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.CategoryId == categoryId).ToList());
         }
 
-        //Cross Cutting Concerns Examples: Validation, Cache, Log, Performance, Auth, Transaction
+
+        //Cross Cutting Concerns Examples: Validation (before), Cache (usually before from list operations), Log (before or after), Performance (before and after), Auth, Transaction
         //AOP - Aspect Oriented Programming  should only use for cross-cutting concerns 
+        //For aspects, I will use Autofac. Alternative of autofac is Postsharp. Its also good for developing aspects
         [ValidationAspect(typeof(ProductValidator),Priority = 1)]
         [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Product product)
         {
-            //Its not the best way
+            //These are not the best ways. Use cross-cutting concerns
             //ValidationTool.Validate(new ProductValidator(),product);
+            //or
+            //ProductValidator productValidator=new ProductValidator();
+            //var result = productValidator.Validate(product);
+            //if(...) etc.
+
+
 
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
