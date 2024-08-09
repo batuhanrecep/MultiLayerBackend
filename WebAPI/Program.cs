@@ -61,6 +61,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services.AddDependencyResolvers(new ICoreModule[]
 {
     new CoreModule(),
+    //In future, we can add new modules that implemented from ICoreModule to here
 });
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
