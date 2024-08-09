@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Core.CrossCuttingConcerns.Caching.Microsoft
 {
