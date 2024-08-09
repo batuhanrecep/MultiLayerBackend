@@ -25,8 +25,11 @@ namespace Core.Aspects.Autofac.Caching
         
         public override void Intercept(IInvocation invocation)
         {
+            //Example of below code: ProductManager.GetByCategory
             var methodName = string.Format($"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}");
             var arguments = invocation.Arguments.ToList();
+
+            //Example of below code: ProductManager.GetByCategory(1,"example")
             var key = $"{methodName}({string.Join(",",arguments.Select(x=>x?.ToString()??"<Null>"))})";
             if (_cacheManager.IsAdd(key))
             {

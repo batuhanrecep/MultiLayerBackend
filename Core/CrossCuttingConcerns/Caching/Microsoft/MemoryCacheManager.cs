@@ -35,7 +35,7 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 
         public bool IsAdd(string key)
         {
-            return _cache.TryGetValue(key, out _);//with underline, we don't care value is exist or not
+            return _cache.TryGetValue(key, out _);//with underline, we don't care value is exist or not. We just want to learn Is there a cache or not  
         }
 
         public void Remove(string key)
