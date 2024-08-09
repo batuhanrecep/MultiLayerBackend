@@ -50,18 +50,12 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
             //To get details of the code: https://www.udemy.com/course/net-core-c-sharp-kursu-2/learn/lecture/16393876#questions/8583358
 
             var cacheEntriesCollectionDefinition = typeof(MemoryCache).GetProperty("EntriesCollection", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-
             var cacheEntriesCollection = cacheEntriesCollectionDefinition.GetValue(_cache) as dynamic;
-
-
             List<ICacheEntry> cacheCollectionValues = new List<ICacheEntry>();
 
             foreach (var cacheItem in cacheEntriesCollection)
             {
-
                 ICacheEntry cacheItemValue = cacheItem.GetType().GetProperty("Value").GetValue(cacheItem, null);
-
-
                 cacheCollectionValues.Add(cacheItemValue);
             }
 
