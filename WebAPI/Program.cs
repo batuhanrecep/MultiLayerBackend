@@ -1,9 +1,9 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Business.DependencyResolvers.Autofac;
-using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.IoC;
+using Core.Utilities.IoC.DependencyResolvers;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,7 +18,7 @@ builder.Services.AddControllers();
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //builder.Services.AddControllers().AddControllersAsServices();
 
-//Autofac
+//Autofac - Dependencies
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>
     (builder => builder.RegisterModule(new AutofacBusinessModule()));
