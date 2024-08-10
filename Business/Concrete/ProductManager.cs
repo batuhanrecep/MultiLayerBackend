@@ -14,6 +14,7 @@ using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Core.CrossCuttingConcerns.Validation.FluentValidation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -21,7 +22,7 @@ using FluentValidation;
 
 namespace Business.Concrete
 {
-    public class ProductManager:IProductService
+    public class ProductManager : IProductService
     {
         private IProductDal _productDal;
 
@@ -43,7 +44,7 @@ namespace Business.Concrete
         }
 
         //[SecuredOperation("Product.List,Admin")]
-        [CacheAspect(duration:10)]
+        [CacheAspect(duration: 10)]
         [LogAspect(typeof(FileLogger))]
         public IDataResult<List<Product>> GetListByCategory(int categoryId)
         {
@@ -54,22 +55,36 @@ namespace Business.Concrete
         //Cross Cutting Concerns Examples: Validation (before), Cache (usually before from list operations), Log (before or after), Performance (before and after), Auth, Transaction
         //AOP - Aspect Oriented Programming  should only use for cross-cutting concerns 
         //For aspects, I will use Autofac. Alternative of autofac is Postsharp. Its also good for developing aspects
-        [ValidationAspect(typeof(ProductValidator),Priority = 1)]
+        [ValidationAspect(typeof(ProductValidator), Priority = 1)]
         [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Product product)
         {
-            //These are not the best ways. Use cross-cutting concerns
+            //This commented lines show ways to Use cross-cutting concerns like validation but these are not the best ways
             //ValidationTool.Validate(new ProductValidator(),product);
             //or
             //ProductValidator productValidator=new ProductValidator();
             //var result = productValidator.Validate(product);
             //if(...) etc.
 
-
+            IResult result = BusinessRules.Run(CheckIfProductNameExists(product.ProductName));
+            if (result != null)
+            {
+                return result;
+            }
 
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
 
+        }
+
+        private IResult CheckIfProductNameExists(string productName)
+        {
+            if (_productDal.Get(p => p.ProductName == productName) != null)
+            {
+                return new ErrorResult(Messages.ProductNameAlreadyExists);
+            }
+
+            return new SuccessResult();
         }
 
         public IResult Update(Product product)
@@ -92,10 +107,10 @@ namespace Business.Concrete
             _productDal.Add(product);
             _productDal.Update(product);
 
-            
+
 
             return new SuccessResult(Messages.ProductUpdated);
         }
     }
-  
+
 }
