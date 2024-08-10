@@ -8,6 +8,7 @@ using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation.FluentValidation;
@@ -27,8 +28,10 @@ namespace Business.Concrete
             _productDal = productDal;
         }
 
+        [PerformanceAspect(5)]
         public IDataResult<List<Product>> GetList()
         {
+            Thread.Sleep(5000); //TO TEST OUR PERFORMANCE ASPECT
             return new SuccessDataResult<List<Product>>(_productDal.GetList().ToList());
         }
 
