@@ -18,5 +18,6 @@ namespace Business.Constants
         public static string UserAlreadyExists = "User Already Exist";
         public static string UserRegistered = "User Already Registered";
         public static string AccessTokenCreated = "Access Token Successfully Created ";
+        public static string AuthrozationDenied = "You don't have authority";
     }
 }
