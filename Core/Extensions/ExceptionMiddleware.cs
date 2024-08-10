@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 
 namespace Core.Extensions
@@ -34,10 +35,19 @@ namespace Core.Extensions
         {
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+            //We make this to not show an internal server error for every exception.
+            //With this way, if there is an exception that comes from fluent validation, we will show the message that we write.
+            string message = "Internal Server Error";
+            if (e.GetType()==typeof(ValidationException))
+            {
+                message = e.Message;
+            }
+
             return httpContext.Response.WriteAsync(new ErrorDetails
             {
                 StatusCode = httpContext.Response.StatusCode,
-                Message = "Internal Server Error"
+                Message = message
             }.ToString());
         }
     }
