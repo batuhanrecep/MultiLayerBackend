@@ -19,5 +19,7 @@ namespace Business.Constants
         public static string UserRegistered = "User Already Registered";
         public static string AccessTokenCreated = "Access Token Successfully Created ";
         public static string AuthrozationDenied = "You don't have authority";
+        public static string ProductNameAlreadyExists = "Product Name Already Exist";
+        public static string CategoryIsNotEnable = "Category Is Not Enable";
     }
 }
