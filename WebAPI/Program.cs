@@ -79,6 +79,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//For ExceptionMiddleware/ExceptionMiddlewareExtension
+app.ConfigureCustomExceptionMiddleware();
+
 app.UseCors("AllowSpecificOrigins");
 
 app.UseHttpsRedirection();
