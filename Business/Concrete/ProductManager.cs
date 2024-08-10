@@ -25,10 +25,11 @@ namespace Business.Concrete
     public class ProductManager : IProductService
     {
         private IProductDal _productDal;
-
-        public ProductManager(IProductDal productDal)
+        private ICategoryService _categoryService; //When we need to use another service, we should call ICategoryService not ICategoryDal!
+        public ProductManager(IProductDal productDal, ICategoryService categoryService)
         {
             _productDal = productDal;
+            _categoryService = categoryService;
         }
 
         [PerformanceAspect(5)]
@@ -66,7 +67,7 @@ namespace Business.Concrete
             //var result = productValidator.Validate(product);
             //if(...) etc.
 
-            IResult result = BusinessRules.Run(CheckIfProductNameExists(product.ProductName));
+            IResult result = BusinessRules.Run(CheckIfProductNameExists(product.ProductName), CheckIfCategoryIsEnabled());
             if (result != null)
             {
                 return result;
@@ -80,6 +81,18 @@ namespace Business.Concrete
         private IResult CheckIfProductNameExists(string productName)
         {
             if (_productDal.Get(p => p.ProductName == productName) != null)
+            {
+                return new ErrorResult(Messages.ProductNameAlreadyExists);
+            }
+
+            return new SuccessResult();
+        }
+
+        //This method just wrote for test another service like category
+        private IResult CheckIfCategoryIsEnabled()
+        {
+            var result = _categoryService.GetList();
+            if (result.Data.Count<10)
             {
                 return new ErrorResult(Messages.ProductNameAlreadyExists);
             }
