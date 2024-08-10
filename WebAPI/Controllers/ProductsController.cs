@@ -17,8 +17,10 @@ namespace WebAPI.Controllers
             _productService = productService;
         }
 
+        ////[Authorize(Roles = "Product.List")]
+        // This is not a good way to do authorization. In future, we can change our controller. 
+        // Or, we can have more than one controller and when we change one role, we may have to change all role system.
         [HttpGet("getall")] //kind of url info
-        [Authorize(Roles = "Product.List")] 
         public IActionResult GetList()
         {
             var result = _productService.GetList();
